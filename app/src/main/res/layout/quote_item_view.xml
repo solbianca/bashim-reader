@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:src="@drawable/dash"
+        android:layerType="software" />
+
+    <TextView
+        android:id="@+id/quote_vote_up"
+        style="@style/TextView.Primary.Bold"
+        android:text="+"/>
+
+    <TextView
+        android:id="@+id/quote_id"
+        style="@style/TextView.Primary.Bold"
+        android:layout_toEndOf="@+id/quote_vote_up"
+        android:text="id"/>
+
+    <TextView
+        android:id="@+id/quote_vote_down"
+        style="@style/TextView.Primary.Bold"
+        android:layout_toEndOf="@+id/quote_id"
+        android:text="-"/>
+
+    <TextView
+        android:id="@+id/quote_rating"
+        style="@style/TextView.Secondary"
+        android:layout_marginStart="@dimen/text_small_margin"
+        android:layout_toEndOf="@+id/quote_vote_down"
+        android:text="rating"/>
+
+    <TextView
+        android:id="@+id/quote_date"
+        style="@style/TextView.Secondary"
+        android:layout_toEndOf="@+id/quote_rating"
+        android:layout_marginStart="@dimen/text_small_margin"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="date"/>
+
+    <TextView
+        android:id="@+id/quote_text"
+        style="@style/TextView.Primary"
+        android:layout_below="@id/quote_date"
+        android:text="text"/>
+
+</RelativeLayout>
