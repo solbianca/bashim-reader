@@ -1,6 +1,7 @@
 package com.example.solbianca.bashim;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,9 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import com.example.solbianca.bashim.Fragments.BestByRatingQuotesFragment;
+import com.example.solbianca.bashim.Fragments.BestQuotesFragment;
+import com.example.solbianca.bashim.Fragments.NewQuotesFragment;
 import com.example.solbianca.bashim.Fragments.QuotesFragment;
+import com.example.solbianca.bashim.Fragments.RandomQuotesFragment;
 import com.example.solbianca.bashim.Services.BashImApi;
 
 public class BashActivity extends AppCompatActivity
@@ -21,6 +25,10 @@ public class BashActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         setContentView(R.layout.activity_bash);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -34,7 +42,7 @@ public class BashActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        initFragment(BashImApi.QUOTES_NEW);
+        initNewQuotesFragment();
     }
 
     @Override
@@ -71,13 +79,13 @@ public class BashActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_new_quotes) {
-            initFragment(BashImApi.QUOTES_NEW);
+            initNewQuotesFragment();
         } else if (id == R.id.nav_random_quotes) {
-            initFragment(BashImApi.QUOTES_RANDOM);
+            initRandomQuotesFragment();
         } else if (id == R.id.nav_best_quotes) {
-            initFragment(BashImApi.QUOTES_BEST_OF_THE_DAY);
+            initBestQuotesFragment();
         } else if (id == R.id.nav_best_by_rating_quotes) {
-            initFragment(BashImApi.QUOTES_BEST_BY_RATING);
+            initBestByRatingQuotesFragment();
         }
 
         item.setChecked(true);
@@ -88,9 +96,30 @@ public class BashActivity extends AppCompatActivity
         return true;
     }
 
-    private void initFragment(String route) {
-        QuotesFragment fragment = new QuotesFragment();
-        fragment.setQuotesRoute(route);
+    private void initNewQuotesFragment() {
+        QuotesFragment fragment = new NewQuotesFragment();
+        fragment.setQuotesRoute(BashImApi.QUOTES_NEW);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+    }
+
+    private void initRandomQuotesFragment() {
+        QuotesFragment fragment = new RandomQuotesFragment();
+        fragment.setQuotesRoute(BashImApi.QUOTES_RANDOM);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+    }
+
+    private void initBestQuotesFragment() {
+        QuotesFragment fragment = new BestQuotesFragment();
+        fragment.setQuotesRoute(BashImApi.QUOTES_BEST_OF_THE_DAY);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+    }
+
+    private void initBestByRatingQuotesFragment() {
+        QuotesFragment fragment = new BestByRatingQuotesFragment();
+        fragment.setQuotesRoute(BashImApi.QUOTES_BEST_BY_RATING);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }

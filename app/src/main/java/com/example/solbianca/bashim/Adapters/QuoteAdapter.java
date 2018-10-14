@@ -53,14 +53,13 @@ public class QuoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        Log.i("dump", "adapter:on create view holder:view type" + viewType);
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         if (viewType == VIEW_TYPE_LOADER) {
             View view = inflater.inflate(R.layout.loader_item_view, viewGroup, false);
             return new LoaderViewHolder(view);
         } else if (viewType == VIEW_TYPE_ITEM) {
             View view = inflater.inflate(R.layout.quote_item_view, viewGroup, false);
-            return new QuoteViewHolder(view);
+            return new QuoteViewHolder(view, this.context);
         }
 
         throw new IllegalArgumentException("Invalid ViewType: " + viewType);

@@ -22,4 +22,13 @@ public interface BashImApi {
 
     @GET("index/{pageid}")
     Call<ResponseBody> loadPage(@Path("pageid") String pageId);
+
+    @GET("/quote/{quoteId}/rulez")
+    Call<ResponseBody> voteUp(@Path("quoteId") String quoteId);
+
+    @GET("/quote/{quoteId}/sux")
+    Call<ResponseBody> voteDown(@Path("quoteId") String quoteId);
+
+    @GET("/quote/{quoteId}/bayan")
+    Call<ResponseBody> voteBayan(@Path("quoteId") String quoteId);
 }

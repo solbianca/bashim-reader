@@ -96,7 +96,6 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
             onLoadMore(currentPage, totalItemCount, view);
             loading = true;
         }
-        Log.i("dump", "lastVisibleItemPosition: " + lastVisibleItemPosition);
     }
 
     // Call this method whenever performing new searches
