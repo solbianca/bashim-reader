@@ -1,5 +1,6 @@
 package com.example.solbianca.bashim.Extractors;
 
+import com.example.solbianca.bashim.Components.Pager.EmptyPager;
 import com.example.solbianca.bashim.Components.Pager.PagerInterface;
 import com.example.solbianca.bashim.Components.Pages.PageInterface;
 import com.example.solbianca.bashim.Components.Pages.QuotesPage;
@@ -16,57 +17,43 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class QuoteExtractor implements ExtractorInterface {
+public class BestQuoteExtractor implements ExtractorInterface {
 
-    private String route;
     private QuotesParserInterface quotesParser;
     private PaginationParserInterface paginationParser;
 
-    public QuoteExtractor(QuotesParserInterface quotesParser, PaginationParserInterface paginationParser, String route) {
-        this.route = route;
+    public BestQuoteExtractor(QuotesParserInterface quotesParser) {
         this.quotesParser = quotesParser;
         this.paginationParser = paginationParser;
     }
 
-    public PageInterface extract(Integer pageNum) {
-        ArrayList<Quote> quotes = this.extractQuotes(pageNum);
-        PagerInterface pager = this.extractPagination();
+    public PageInterface extract() {
+        String url = BashImApi.HOST + "/best/";
+        ArrayList<Quote> quotes = this.extractQuotes(url);
 
-        return new QuotesPage(quotes, pager);
+        return new QuotesPage(quotes, new EmptyPager());
     }
 
-    private ArrayList<Quote> extractQuotes(Integer pageNum) {
-        String url = createUrl(pageNum);
+    public PageInterface extract(Integer year) {
+        String url = BashImApi.HOST + "/bestyear/" + year.toString() + "/";
+        ArrayList<Quote> quotes = this.extractQuotes(url);
+
+        return new QuotesPage(quotes, new EmptyPager());
+    }
+
+    public PageInterface extract(Integer year, Integer month) {
+        String url = BashImApi.HOST + "/bestmonth/" + year.toString() + "/" + month.toString() + "/";
+        ArrayList<Quote> quotes = this.extractQuotes(url);
+
+        return new QuotesPage(quotes, new EmptyPager());
+    }
+
+    private ArrayList<Quote> extractQuotes(String url) {
         String page = loadPage(url);
         if (page == null) {
             return null;
         }
         return this.quotesParser.parse(page).getQuotes();
-    }
-
-    private PagerInterface extractPagination() {
-        String url = BashImApi.HOST + "/" + this.route + "/";
-
-        String page = loadPage(url);
-        if (page == null) {
-            return null;
-        }
-
-        return this.paginationParser.parse(page).getPager();
-    }
-
-    private String createUrl(Integer page) {
-        String host = BashImApi.HOST + "/" + this.route + "/";
-
-        if (this.route.equals(BashImApi.QUOTES_NEW)) {
-            if (page == 0) {
-                return host;
-            } else {
-                return host + page + "/";
-            }
-        }
-
-        return host;
     }
 
     private String loadPage(String url) {

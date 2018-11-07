@@ -3,27 +3,15 @@ package com.example.solbianca.bashim.ViewHolders;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.solbianca.bashim.Components.RetrofitFactory;
 import com.example.solbianca.bashim.Entities.Quote;
 import com.example.solbianca.bashim.Listeners.VoteBayanClickListener;
-import com.example.solbianca.bashim.Listeners.VoteClickListener;
 import com.example.solbianca.bashim.Listeners.VoteDownClickListener;
 import com.example.solbianca.bashim.Listeners.VoteUpClickListener;
 import com.example.solbianca.bashim.R;
-import com.example.solbianca.bashim.Services.BashImApi;
-
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class QuoteViewHolder extends RecyclerView.ViewHolder {
 

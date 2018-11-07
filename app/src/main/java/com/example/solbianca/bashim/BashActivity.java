@@ -11,11 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.solbianca.bashim.Fragments.BestByRatingQuotesFragment;
 import com.example.solbianca.bashim.Fragments.BestQuotesFragment;
 import com.example.solbianca.bashim.Fragments.NewQuotesFragment;
-import com.example.solbianca.bashim.Fragments.QuotesFragment;
 import com.example.solbianca.bashim.Fragments.RandomQuotesFragment;
 import com.example.solbianca.bashim.Services.BashImApi;
 
@@ -97,28 +97,32 @@ public class BashActivity extends AppCompatActivity
     }
 
     private void initNewQuotesFragment() {
-        QuotesFragment fragment = new NewQuotesFragment();
+        setTitle("Новые");
+        NewQuotesFragment fragment = new NewQuotesFragment();
         fragment.setQuotesRoute(BashImApi.QUOTES_NEW);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     private void initRandomQuotesFragment() {
-        QuotesFragment fragment = new RandomQuotesFragment();
+        setTitle("Случайные");
+        RandomQuotesFragment fragment = new RandomQuotesFragment();
         fragment.setQuotesRoute(BashImApi.QUOTES_RANDOM);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     private void initBestQuotesFragment() {
-        QuotesFragment fragment = new BestQuotesFragment();
+        setTitle("Лучшие за день");
+        BestQuotesFragment fragment = new BestQuotesFragment();
         fragment.setQuotesRoute(BashImApi.QUOTES_BEST_OF_THE_DAY);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     private void initBestByRatingQuotesFragment() {
-        QuotesFragment fragment = new BestByRatingQuotesFragment();
+        setTitle("Лучшие по рейтингу");
+        BestByRatingQuotesFragment fragment = new BestByRatingQuotesFragment();
         fragment.setQuotesRoute(BashImApi.QUOTES_BEST_BY_RATING);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();

@@ -2,19 +2,20 @@ package com.example.solbianca.bashim.Tasks;
 
 import android.os.AsyncTask;
 
+import com.example.solbianca.bashim.Adapters.QuotesAdapterInterface;
 import com.example.solbianca.bashim.Components.Pages.PageInterface;
+import com.example.solbianca.bashim.Components.Pages.QuotesPageAwareInterface;
 import com.example.solbianca.bashim.Extractors.ExtractorInterface;
-import com.example.solbianca.bashim.Fragments.QuotesFragment;
-
-import java.util.ArrayList;
 
 public class QuotesPageTask extends AsyncTask<Integer, Void, PageInterface> {
 
-    private QuotesFragment fragment;
+    private QuotesPageAwareInterface fragment;
+    private QuotesAdapterInterface adapter;
     private ExtractorInterface extractor;
 
-    public QuotesPageTask(QuotesFragment fragment, ExtractorInterface extractor) {
+    public QuotesPageTask(QuotesPageAwareInterface fragment, QuotesAdapterInterface adapter, ExtractorInterface extractor) {
         this.fragment = fragment;
+        this.adapter = adapter;
         this.extractor = extractor;
     }
 
@@ -23,14 +24,18 @@ public class QuotesPageTask extends AsyncTask<Integer, Void, PageInterface> {
         return this.extractor.extract(pageNum[0]);
     }
 
+    private QuotesAdapterInterface quotesAdapter() {
+        return  this.adapter;
+    }
+
     @Override
     protected void onPostExecute(PageInterface page) {
         this.fragment.setQuotesPage(page);
-        this.fragment.getQuoteAdapter().showLoading(false);
-        if (this.fragment.getQuoteAdapter().isEmptQuotes()) {
-            this.fragment.getQuoteAdapter().setQuotes(page.getQuotes());
+        this.quotesAdapter().showLoading(false);
+        if (this.quotesAdapter().isEmptyQuotes()) {
+            this.quotesAdapter().setQuotes(page.getQuotes());
         } else {
-            this.fragment.getQuoteAdapter().addQuotes(page.getQuotes());
+            this.quotesAdapter().addQuotes(page.getQuotes());
         }
     }
 }
